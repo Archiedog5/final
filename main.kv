@@ -1,0 +1,16 @@
+ScreenManager:
+    id: screen_manager
+    Screen: 
+        name: "Home_screen"
+        Button: 
+            text: "Go to settings"
+            on_press: screen_manager.current = "settings"
+        Button:
+            text: "Would you want a burger?"
+            on_press: screen_manager.current="settings"
+            pos =(20, 20)
+    Screen: 
+        name: "settings"
+        Button: 
+            text: "Go to Home_screen"
+            on_press: screen_manager.current = "Home_screen"
