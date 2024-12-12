@@ -1,5 +1,17 @@
+import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((400, 720))
+
 class Order:
-    def __init__(self, drink=None, appetizer=None, main_course=None, first_side=None, secound_side=None, dessert=None ):
+    def __init__(self, drink=None, appetizer=None, main_course=None, first_side=None, secound_side=None, dessert=None, order_button_img="images/Screenshot 2024-12-12 110923.png"):
+        self.drink_button=pygame.image.load(order_button_img).convert_alpha()
+        order_button_img=order_button_img
+        self.appetizer_button=pygame.image.load(order_button_img).convert_alpha()
+        self.main_course_button=pygame.image.load(order_button_img).convert_alpha()
+        self.first_side_button=pygame.image.load(order_button_img).convert_alpha()
+        self.secound_side_button=pygame.image.load(order_button_img).convert_alpha()
+        self.dessert_button=pygame.image.load(order_button_img).convert_alpha()
         self.drink=drink
         self.appetizer=appetizer
         self.main_course=main_course
@@ -16,6 +28,23 @@ class Order:
         self.dessert_menu=['Spounge Cake', 'Pudding', 'Icecream']
         self.Full_menu_value=list(self.Full_menu.values())
         self.Order_cost=[]
+    
+    def resize_img(self):
+        self.drink_button = pygame.transform.scale(self.drink_button, (100, 34))
+        self.appetizer_button = pygame.transform.scale(self.appetizer_button, (100, 34))
+        self.main_course_button = pygame.transform.scale(self.main_course_button, (100, 34))
+        self.first_side_button = pygame.transform.scale(self.first_side_button, (100, 34))
+        self.secound_side_button = pygame.transform.scale(self.secound_side_button, (100, 34))
+        self.dessert_button = pygame.transform.scale(self.dessert_button, (100, 34))
+
+    def showimgs(self,screen):
+        screen.blit(self.dessert_button, (75,-50))
+        screen.blit(self.main_course_button, (25,-50))
+        screen.blit(self.first_side_button, (3,1))
+        screen.blit(self.drink_button, (100, 75))
+        screen.blit(self.secound_side_button, (200,3))
+
+
     
     def add_order(self):
         total=0
