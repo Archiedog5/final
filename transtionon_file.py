@@ -17,6 +17,12 @@ class Order:
         self.first_side_button = pygame.transform.scale(self.first_side_button, (100, 34))
         self.secound_side_button = pygame.transform.scale(self.secound_side_button, (100, 34))
         self.dessert_button = pygame.transform.scale(self.dessert_button, (100, 34))
+        self.drink_button = self.drink_button.get_rect(center = (70,180))
+        self.appetizer_button = self.appetizer_button.get_rect(center = (70,180))
+        self.main_course_button= self.main_course_button.get_rect(center = (70,180))
+        self.first_side_button  = self.first_side_button .get_rect(center = (70,180))
+        self.secound_side_button  = self.secound_side_button .get_rect(center = (70,180))
+        self.dessert_button = self.dessert_button.get_rect(center = (70,180))
 
     def showing(self,screen):
         screen.blit(self.dessert_button, (75,50))
