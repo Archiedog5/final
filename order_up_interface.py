@@ -1,7 +1,6 @@
 import pygame
 import sys
 from transtionon_file import Order
-
 pygame.init()
 screen = pygame.display.set_mode((800, 720))
 clock = pygame.time.Clock()
@@ -23,6 +22,10 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Get mouse position
+            mouse = pygame.mouse.get_pos()
+            if 100 == mouse[0] and 200 == mouse[1]:
+                print('lol') 
+                pygame.quit() 
             mouse_pos = pygame.mouse.get_pos()
 
             # Check if mouse click is within button area
