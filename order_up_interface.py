@@ -1,35 +1,60 @@
 import pygame
 import sys
-from transtionon_file import Order
+
+# Initializing Pygame
 pygame.init()
-screen = pygame.display.set_mode((800, 720))
-clock = pygame.time.Clock()
 
-SPAWNPIPE = pygame.USEREVENT
-pygame.time.set_timer(SPAWNPIPE, 2500)
+# Screen resolution
+res = (800, 600)
+screen = pygame.display.set_mode(res)
 
-game = Order('images\Screenshot 2024-12-12 110923.png')
-game.resize_img()
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
-if game.active:
-        game.showing(screen)
-pygame.display.update()
+# Fonts
+font = pygame.font.SysFont('Corbel', 35)
 
+# Screens/States
+MENU = 0
+GAME = 1
+
+# Initial state
+current_state = MENU
+
+def draw_menu():
+    screen.fill(BLACK)
+    text = font.render("Press ENTER to Start", True, WHITE)
+    screen.blit(text, (250, 250))
+
+def draw_game():
+    screen.fill(RED)
+    text = font.render("Game is Running...", True, WHITE)
+    screen.blit(text, (250, 250))
+
+# Main game loop
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            # Get mouse position
-            mouse = pygame.mouse.get_pos()
-            if 100 == mouse[0] and 200 == mouse[1]:
-                print('lol') 
-                pygame.quit() 
-            mouse_pos = pygame.mouse.get_pos()
 
-            # Check if mouse click is within button area
-        if event.type == pygame.MOUSEBUTTONUP:
-            pos = pygame.mouse.get_pos()
+        if event.type == pygame.KEYDOWN:
+            if current_state == MENU:
+                if event.key == pygame.K_s:  # Press Enter to start the game
+                    current_state = GAME  # Switch to the game screen
+            elif current_state == GAME:
+                if event.key == pygame.K_ESCAPE:  # Press Escape to return to the menu
+                    current_state = MENU  # Switch to the menu screen
+
+    # Drawing screens based on the current state
+    if current_state == MENU:
+        draw_menu()  # Draw the menu screen
+    elif current_state == GAME:
+        draw_game()  # Draw the game screen
+
+    pygame.display.update()  # Update the display
+
 
 
