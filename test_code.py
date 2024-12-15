@@ -1,14 +1,14 @@
 import pygame
 import sys
 
-# initializing the constructor
+
 pygame.init()
 
 
-# screen resolution
+
 res = (1500, 1000)
 
-# opens up a window
+
 screen = pygame.display.set_mode(res)
 thai_ice_tea=pygame.image.load('thaitea.jpg').convert_alpha()
 thai_ice_tea = pygame.transform.scale(thai_ice_tea, (150, 200))
@@ -44,32 +44,30 @@ cake_img=pygame.transform.scale(cake_img, (200, 200))
 nodel_plate_img=pygame.transform.scale(nodel_plate_img, (200, 200))
 curry_img=pygame.transform.scale(curry_img, (200, 200))
 salad_img=pygame.transform.scale(salad_img, (200, 200))
-shopping_cart=salad_img=pygame.image.load('shopping_cart.jpg').convert_alpha()
+shopping_cart=pygame.image.load('shopping_cart.jpg').convert_alpha()
 shopping_cart=pygame.transform.scale(shopping_cart, (200, 200))
 
 
-# white color
+
 color = (255, 255, 255)
 
-# light shade of the button
+
 color_light = (170, 170, 170)
 
-# dark shade of the button
+
 color_dark = (100, 100, 100)
 
-# stores the width of the screen into a variable
+
 width = screen.get_width()
 
-# stores the height of the screen into a variable
 height = screen.get_height()
 
-# defining a font
+
 smallfont = pygame.font.SysFont('Corbel', 35)
 
-# rendering a text written in this font
+
 total_order_cost=0
-total_order_tax=total_order_cost*0.0725+total_order_cost
-total_order_tax=round(total_order_tax,2)
+total_order_tax=0
 erm1=0
 umm1=0
 amm1=0
@@ -87,6 +85,7 @@ amm4=0
 erm5=0
 umm5=0
 amm5=0
+total_items=erm1+umm1+amm1+erm2+umm2+amm2+erm3+umm3+amm5+dum+fun+erm4+umm4+amm4+erm5+umm5+amm5
 intro_text=smallfont.render('Hello welcome to my restrant. Press one of the menus. Then chose the item you like by pressing the number above it.\n Every time you click that button it will add one of those items to your order. When your done finding all of your item press the cart button and you can complete the ordering process there.',True,color)
 soda_text= smallfont.render('Soda', True, color)
 thai_ice_tea_text= smallfont.render('Thai Ice Tea', True, color)
@@ -105,6 +104,9 @@ nodel_plate_text=smallfont.render('Nodel Plate', True, color)
 cake_text=smallfont.render('Spounge Cake', True, color)
 pudding_text=smallfont.render('Pudding', True, color)
 ice_cream_text=smallfont.render('Ice Cream', True, color)
+prompt_text = smallfont.render("Enter your name:", True, color)
+input_text=''
+input_name_text = smallfont.render(input_text, True, color)
 text1 = smallfont.render(str(erm1), True, color)
 text2 = smallfont.render(str(umm1), True, color)
 text3 = smallfont.render(str(amm1), True, color)
@@ -129,11 +131,11 @@ entre_button = smallfont.render("Entre menu", True, color)
 side_button = smallfont.render("side menu", True, color)
 back_button= smallfont.render("Back", True, color)
 shopping_cart_button=smallfont.render("Cart",True,color)
-# Set the initial position of the button here:
+
 button_1width = 140
 button_1height = 40
 
-# Set the button's initial position at the start (e.g., top-left corner)
+
 thai_ice_tea_lx=0
 thai_ice_tea_ly=300
 soda_img_lx=200
@@ -144,8 +146,8 @@ beef_img_lx=600
 fungus_img_lx=800
 back_button_lx=350
 back_button_ly=700
-button_1x = 0  # You can change this value to adjust the horizontal position
-button_1y = 200  # You can change this value to adjust the vertical position
+button_1x = 0  
+button_1y = 200  
 button_2x = 200
 button_3x = 400
 button_4x = 600
@@ -224,6 +226,7 @@ def show_dessert_menu():
 
 def show_menu_menu():
     screen.fill((60,25,60))
+    screen.blit(intro_text,(0,0))
     screen.blit(dessert_button,(0,300))
     screen.blit(ice_cream_img,(0,400))
     screen.blit(drink_button,(200,300))
@@ -234,13 +237,93 @@ def show_menu_menu():
     screen.blit(rice_img,(700,400))
     screen.blit(entre_button,(900,300))
     screen.blit(curry_img,(900,400))
-    screen.blit(shopping_cart_button,(350,800))
-    screen.blit(shopping_cart,(350,900))
+    screen.blit(shopping_cart_button,(350,700))
+    screen.blit(shopping_cart,(350,800))
 
-    # if mouse is hovered on a button, it changes to a lighter shade
+def show_cart(question, x, y):
+    total_order_tax=total_order_cost*0.0725+total_order_cost
+    total_order_tax=round(total_order_tax,2)
+    total_items=erm1+umm1+amm1+erm2+umm2+amm2+erm3+umm3+amm5+dum+fun+erm4+umm4+amm4+erm5+umm5+amm5
+    total_items_text=smallfont.render('Items in order: '+str(total_items),True,color)
+    total_order_tax_text=smallfont.render('subtotal: '+str(total_order_tax),True,color)
+    total_order_cost_text=smallfont.render('toatl: '+str(total_order_cost),True,color) 
+    screen.fill((60,25,60))
+    screen.blit(total_items_text, (700,150))
+    screen.blit(total_order_cost_text, (700,250))
+    screen.blit(total_order_tax_text, (700,350))
+    input_text = ""
+    done=False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                
+                if event.key == pygame.K_RETURN:
+                    done = True
+                
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]
+                
+                else:
+                    input_text += event.unicode
 
+        
+        question_text = smallfont.render(question,True, color)
+        input_name_text = smallfont.render(input_text, True, color)
+
+        
+        screen.blit(question_text, (x, y))
+        screen.blit(input_name_text, (x, y + 50))
+
+       
+        pygame.display.flip()
+
+
+
+    return input_text
+
+def main():
+    
+    questions = [
+        "What is your adress?",
+        "What is your credit card num?",
+        "What is your Cvv?"
+    ]
+
+    # Collect answers
+    answers = []
+    for i, question in enumerate(questions):
+        y_pos = 150 + (i * 100)  
+        answer = show_cart(question, 100, y_pos)
+        answers.append(answer)
+
+    
+    screen.fill((255,255,255))
+    total_items_text=smallfont.render('Items in order: '+str(total_items),True,(0,0,0))
+    total_order_tax_text=smallfont.render('subtotal: '+str(total_order_tax),True,(0,0,0))
+    total_order_cost_text=smallfont.render('toatl: '+str(total_order_cost),True,(0,0,0)) 
+    welcome_text = smallfont.render(f"Food is getting sent to, {answers[0]}!",True, (0,0,0))
+    age_text = smallfont.render(f"Credit card being charged is {answers[1]}.",True, (0,0,0))
+    color_text = smallfont.render(f"Credit card cvv is {answers[2]}.",True, (0,0,0))
+
+    screen.blit(total_items_text, (100,150))
+    screen.blit(total_order_cost_text, (100,250))
+    screen.blit(total_order_tax_text, (100,350))
+    screen.blit(welcome_text, (100, 550))
+    screen.blit(age_text, (100, 650))
+    screen.blit(color_text, (100, 750))
+
+    pygame.display.flip()
+
+
+
+    pygame.time.wait(2000)
+    pygame.quit()
+    sys.exit()
 while True:
-    # stores the (x, y) coordinates into the variable as a tuple
+
     mouse = pygame.mouse.get_pos()
 
 
@@ -252,7 +335,7 @@ while True:
         if current_screen == 'menu menu':
             show_menu_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if 0<= mouse[0] <= 0+ button_1width and 300 <= mouse[1] <= 300 + button_1height:
                     current_screen='dessert menu'
                 
@@ -268,7 +351,7 @@ while True:
                 if 900 <= mouse[0] <= 900 + button_1width and 300 <= mouse[1] <= 300 + button_1height:
                     current_screen='entre menu'
 
-                if 900 <= mouse[0] <= 900 + button_1width and 300 <= mouse[1] <= 300 + button_1height:
+                if 350 <= mouse[0] <= 350 + button_1width and 700 <= mouse[1] <= 700 + button_1height:
                     current_screen='checkout'
 
                 if 0 <= mouse[0] <= 0 + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
@@ -288,7 +371,7 @@ while True:
         if current_screen == 'drink menu':
             show_drink_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if button_1x <= mouse[0] <= button_1x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
                     erm1+=1
                     total_order_cost+=5.35
@@ -322,7 +405,7 @@ while True:
         if current_screen == 'appatizer menu':
             show_appatizer_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if button_1x <= mouse[0] <= button_1x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
                     erm2+=1
                     total_order_cost+=5.00
@@ -334,7 +417,8 @@ while True:
                     text22 = smallfont.render(str(umm2), True, color)
                 
                 if button_3x <= mouse[0] <= button_3x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
-                    amm2+=10.50
+                    amm2+=1
+                    total_order_cost+=10.50
                     text23 = smallfont.render(str(amm2), True, color)
 
                 if back_button_lx <= mouse[0] <= back_button_lx + button_1width and back_button_ly <= mouse[1] <= back_button_ly + button_1height:
@@ -355,7 +439,7 @@ while True:
         if current_screen == 'side menu':
             show_side_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if button_1x <= mouse[0] <= button_1x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
                     erm3+=1
                     total_order_cost+=0.50
@@ -405,7 +489,7 @@ while True:
         if current_screen == 'entre menu':
             show_entre_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if button_1x <= mouse[0] <= button_1x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
                     erm4+=1
                     text41 = smallfont.render(str(erm4), True, color)
@@ -436,7 +520,7 @@ while True:
         if current_screen == 'dessert menu':
             show_dessert_menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if the mouse is clicked on the button the game is terminated
+
                 if button_1x <= mouse[0] <= button_1x + button_1width and button_1y <= mouse[1] <= button_1y + button_1height:
                     erm5+=1
                     total_order_cost+=5.00
@@ -465,10 +549,12 @@ while True:
                     pygame.draw.rect(screen, color_light, [button_2x, button_1y, button_1width, button_1height])
 
                 if back_button_lx <= mouse[0] <= back_button_lx + button_1width and back_button_ly <= mouse[1] <= back_button_ly + button_1height:
-                    pygame.draw.rect(screen, color_light, [back_button_lx, back_button_ly, button_1width, button_1height])               
+                    pygame.draw.rect(screen, color_light, [back_button_lx, back_button_ly, button_1width, button_1height]) 
+        if current_screen == 'checkout':
+            main()
 
-    # superimposing the text onto our button
 
 
-    # updates the frames of the game
+
+
     pygame.display.update()
